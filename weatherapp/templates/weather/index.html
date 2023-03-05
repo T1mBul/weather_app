@@ -8,14 +8,13 @@
 <body>
 <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
     <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-        <h1><span class="fs-4">Погода в мире</span></h1>
+        <h1><span class="fs-2">Погода в мире</span></h1>
     </a>
-
     <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        <a class="p-2 text-dark" href="#">Главная</a>
-        <a class="p-2 text-dark" href="#">Информация</a>
+        <a class="p-2 text-dark" href="/">Главная</a>
+        <a class="p-2 text-dark" href="{% url 'info' %}">Информация</a>
+        <a class="btn btn-outline-primary" href="{% url 'support' %}">Техническая поддержка</a>
     </nav>
-    <a class="btn btn-outline-primary" href="#">Техническая поддержка</a>
 </div>
 <div class="container mt-5">
     <div class="row">
@@ -24,7 +23,8 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 {{ form.name }}
-                <input type="submit" name="send" value="Добавить город" class="mt-2 btn btn-danger">
+                <input type="submit" name="send" value="Добавить город" class="mt-2 btn btn-danger"
+                       pattern="[A-Za-z_-]">
                 {% if message %}
                 <div class="notification {{ message_1 }}">{{ message }}</div>
                 {% endif %}
@@ -38,14 +38,16 @@
                     <div class="color-9">
                         <b>Город:</b> {{ info.city }}<br>
                         <b>Температура:</b> {{ info.temp }} C<sup>o</sup><br>
-                        <b>Описание:</b> {{ info.description }} <img src="http://openweathermap.org/img/w/{{ info.icon }}.png" width="40" height="20" alt="Фото погоды"
-                             class="img-thumbnail"><br>
+                        <b>Описание:</b> {{ info.description }} <img
+                            src="http://openweathermap.org/img/w/{{ info.icon }}.png" width="40" height="20"
+                            alt="Фото погоды"
+                            class="img-thumbnail"><br>
                         <b>Скорость ветра:</b> {{ info.wind }} м/с<br>
                     </div>
                 </div>
                 <div class="media-right">
                     <a href="{% url 'delete_city' info.city %}">
-                        <button class="delete">Удалить</button>
+                        <button class="mt-2 btn btn-danger">Удалить</button>
                     </a>
                 </div>
             </div>
